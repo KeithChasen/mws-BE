@@ -1,18 +1,19 @@
-const { ApolloServer, gql } = require('apollo-server');
+const { ApolloServer } = require('apollo-server');
 const mongoose = require('mongoose');
 const fs = require('fs');
 
-const config = fs.existsSync('./config') ? require('./config') : null;
+const config = fs.existsSync('./config.js') ? require('./config.js') : null;
 
 const PORT = process.env.PORT || config.PORT;
 const MONGO = process.env.MONGO || config.MONGO;
 
 const typeDefs = require('./graphql/typeDefs');
 
-const resolvers = {};
+const resolvers = require('./graphql/resolvers');
 
 const server = new ApolloServer({
-  typeDefs, resolvers
+  typeDefs,
+  resolvers
 });
 
 mongoose
