@@ -7,4 +7,14 @@ module.exports = gql`
       token: String
       createdAt: String
   }
+  
+  input RegisterInput {
+      email: String!
+      password: String!
+      confirmPassword: String!
+  }
+  
+  type Mutation {
+      register(registerInput: RegisterInput): User
+  }
 `;
