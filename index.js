@@ -7,7 +7,7 @@ const config = fs.existsSync('./config') ? require('./config') : null;
 const PORT = process.env.PORT || config.PORT;
 const MONGO = process.env.MONGO || config.MONGO;
 
-const typeDefs = gql``;
+const typeDefs = require('./graphql/typeDefs');
 
 const resolvers = {};
 
