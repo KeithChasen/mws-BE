@@ -2,6 +2,7 @@ const { UserInputError } = require('apollo-server');
 const bcrypt = require('bcryptjs');
 
 const User = require('../../mongo/User');
+const { validateRegister } = require('../../utils/validations/auth')
 
 module.exports = {
   Query: {
@@ -11,6 +12,15 @@ module.exports = {
   },
   Mutation: {
     async register(_, { registerInput: { email, password, confirmPassword }}) {
+
+      const validatedInput = validateRegister(email, password, confirmPassword);
+
+      if(Object.keys(validatedInput).length) {
+        throw new UserInputError('Validation errors', {
+          validatedInput
+        });
+      }
+
       const user = await User.findOne({ email });
 
       if (user) {
