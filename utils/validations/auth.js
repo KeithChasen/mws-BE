@@ -26,4 +26,22 @@ const validateRegister = (email, password, confirmPassword) => {
   return errors;
 };
 
-module.exports = { validateRegister };
+const validateLogin = (email, password) => {
+  const errors = {};
+
+  if (email.trim() === '') {
+    errors.email = 'Email is required';
+  }
+
+  if (!email.match(emailRegEp)) {
+    errors.email = 'Email should be a valid email address';
+  }
+
+  if (password.trim() === '') {
+    errors.password = 'Password is required';
+  }
+
+  return errors;
+};
+
+module.exports = { validateRegister, validateLogin };
