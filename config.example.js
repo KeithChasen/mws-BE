@@ -1,3 +1,4 @@
 const MONGO = "";
 const PORT = 5000;
-module.exports = { MONGO, jwtSecret, PORT };
+const JWT = '';
+module.exports = { MONGO, JWT, PORT };

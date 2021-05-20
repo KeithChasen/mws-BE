@@ -1,8 +1,18 @@
 const { UserInputError } = require('apollo-server');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const fs = require('fs');
 
+const config = fs.existsSync(`${__dirname}/../../config.js`)? require(`${__dirname}/../../config.js`) : null;
 const User = require('../../mongo/User');
 const { validateRegister, validateLogin } = require('../../utils/validations/auth');
+
+const jwtSecret = process.env.JWT || config.JWT;
+
+const generateToken = user => jwt.sign({
+    id: user.id,
+    email: user.email
+  }, jwtSecret, { expiresIn: '1h' });
 
 module.exports = {
   Query: {
@@ -40,9 +50,12 @@ module.exports = {
 
       const userResponse = await newUser.save();
 
+      const token = generateToken(userResponse);
+
       return {
         ...userResponse._doc,
-        id: userResponse._id
+        id: userResponse._id,
+        token
       }
     },
     async login (_, { loginInput: { email, password }}) {
@@ -74,9 +87,12 @@ module.exports = {
         });
       }
 
+      const token = generateToken(user);
+
       return {
         ...user._doc,
-        id: user._id
+        id: user._id,
+        token
       }
     }
   }
