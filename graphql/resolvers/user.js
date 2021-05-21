@@ -63,7 +63,7 @@ module.exports = {
 
       if(Object.keys(validatedInput).length) {
         throw new UserInputError('Validation errors', {
-          validatedInput
+          errors: validatedInput
         });
       }
 
@@ -72,7 +72,7 @@ module.exports = {
       if (!user) {
         throw new UserInputError('User not found', {
           errors: {
-            user: 'User not found'
+            email: 'User not found'
           }
         });
       }
@@ -82,7 +82,7 @@ module.exports = {
       if (!passwordMatch) {
         throw new UserInputError('Wrong credentials', {
           errors: {
-            user: 'Wrong credentials'
+            email: 'Wrong credentials'
           }
         });
       }
