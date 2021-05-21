@@ -27,7 +27,7 @@ module.exports = {
 
       if(Object.keys(validatedInput).length) {
         throw new UserInputError('Validation errors', {
-          validatedInput
+          errors: validatedInput
         });
       }
 
