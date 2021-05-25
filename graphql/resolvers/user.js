@@ -2,10 +2,21 @@ const { UserInputError } = require('apollo-server');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
+const nodemailer = require('nodemailer');
+const sendgridTransport = require('nodemailer-sendgrid-transport');
 
 const config = fs.existsSync(`${__dirname}/../../config.js`)? require(`${__dirname}/../../config.js`) : null;
 const User = require('../../mongo/User');
 const { validateRegister, validateLogin } = require('../../utils/validations/auth');
+
+const sendgridKey = process.env.SENDGRID || config.SENDGRID;
+const emailFrom = process.env.EMAIL_FROM || config.EMAIL_FROM;
+
+const emailTransporter = nodemailer.createTransport(sendgridTransport({
+  auth: {
+    api_key: sendgridKey
+  }
+}));
 
 const jwtSecret = process.env.JWT || config.JWT;
 
@@ -51,6 +62,19 @@ module.exports = {
       const userResponse = await newUser.save();
 
       const token = generateToken(userResponse);
+
+      try {
+        const emailSent = await emailTransporter.sendMail({
+          to: email,
+          from: emailFrom,
+          subject: 'Successful sign up',
+          html: "<h1>Congratulations!</h1><p>You've been successfully signed up!</p>"
+        });
+
+        console.log(emailSent, 'email sent');
+      } catch (e) {
+        console.log(e, 'Email error');
+      }
 
       return {
         ...userResponse._doc,

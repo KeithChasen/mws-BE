@@ -1,4 +1,7 @@
 const MONGO = "";
 const PORT = 5000;
 const JWT = '';
-module.exports = { MONGO, JWT, PORT };
+const SENDGRID = '';
+const EMAIL_FROM = 'test@test.com';
+
+module.exports = { MONGO, JWT, PORT, SENDGRID, EMAIL_FROM };
