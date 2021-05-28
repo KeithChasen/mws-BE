@@ -15,6 +15,16 @@ const validateRegister = (email, password, confirmPassword) => {
 };
 
 const validateLogin = (email, password) => {
+  const errors = validateEmail(email);
+
+  if (password.trim() === '') {
+    errors.password = 'Password is required';
+  }
+
+  return errors;
+};
+
+const validateEmail = email => {
   const errors = {};
 
   if (email.trim() === '') {
@@ -25,11 +35,7 @@ const validateLogin = (email, password) => {
     errors.email = 'Email should be a valid email address';
   }
 
-  if (password.trim() === '') {
-    errors.password = 'Password is required';
-  }
-
   return errors;
 };
 
-module.exports = { validateRegister, validateLogin };
+module.exports = { validateRegister, validateLogin,validateEmail };

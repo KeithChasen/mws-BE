@@ -13,6 +13,11 @@ module.exports = gql`
       token: String
       createdAt: String
   }
+
+  type ForgotResponse {
+      status: Boolean!
+      message: String!
+  }
   
   input RegisterInput {
       email: String!
@@ -24,9 +29,14 @@ module.exports = gql`
       email: String!
       password: String!
   }
+
+  input ForgotInput {
+      email: String!
+  }
   
   type Mutation {
       register(registerInput: RegisterInput): User
       login(loginInput: LoginInput): User
+      forgot(forgotInput: ForgotInput): ForgotResponse
   }
 `;
