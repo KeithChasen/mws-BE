@@ -1,17 +1,13 @@
 const emailRegEp = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/;
 
 const validateRegister = (email, password, confirmPassword) => {
-  const errors = validateLogin(email, password);
+  const loginErrors = validateLogin(email, password);
+  const passwordErrors = validatePasswords(password, confirmPassword);
 
-  if (password.length < 8) {
-    errors.password = 'Password should be at least 8 characters long';
-  }
-
-  if (confirmPassword !== password) {
-    errors.confirmPassword = 'Password confirmation should match the password';
-  }
-
-  return errors;
+  return {
+    ...loginErrors,
+    ...passwordErrors
+  };
 };
 
 const validateLogin = (email, password) => {
@@ -38,4 +34,18 @@ const validateEmail = email => {
   return errors;
 };
 
-module.exports = { validateRegister, validateLogin,validateEmail };
+const validatePasswords = (password, confirmPassword) => {
+  const errors = {};
+
+  if (password.length < 8) {
+    errors.password = 'Password should be at least 8 characters long';
+  }
+
+  if (confirmPassword !== password) {
+    errors.confirmPassword = 'Password confirmation should match the password';
+  }
+
+  return errors;
+};
+
+module.exports = { validateRegister, validateLogin, validateEmail, validatePasswords };
