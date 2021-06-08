@@ -123,8 +123,6 @@ module.exports = {
       }
     },
     async forgot (_, { forgotInput: { email } }) {
-      console.log(email, 'Email in node');
-
       const validatedEmail = validateEmail(email);
 
       if(Object.keys(validatedEmail).length) {
@@ -138,7 +136,8 @@ module.exports = {
       if (!user) {
         throw new UserInputError('Email not found', {
           errors: {
-            email: "User with such email wasn't found. Please register"
+            email: "User with such email wasn't found. Please register",
+            register: true
           }
         });
       }
