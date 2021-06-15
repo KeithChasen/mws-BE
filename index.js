@@ -11,9 +11,12 @@ const typeDefs = require('./graphql/typeDefs');
 
 const resolvers = require('./graphql/resolvers');
 
+const authMiddleware = require('./utils/authMiddleware');
+
 const server = new ApolloServer({
   typeDefs,
-  resolvers
+  resolvers,
+  context: authMiddleware
 });
 
 mongoose
