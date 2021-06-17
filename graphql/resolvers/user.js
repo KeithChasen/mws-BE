@@ -1,3 +1,4 @@
+const generateToken = require("../../utils/jwt");
 const User = require('../../mongo/User');
 const { UserInputError } = require('apollo-server');
 
@@ -24,7 +25,15 @@ module.exports = {
          lastname
        });
 
-       return await savedUser.save();
+       const userResponse = await savedUser.save();
+
+       const token = generateToken(userResponse);
+
+       return {
+         ...userResponse._doc,
+         id: userResponse._id,
+         token
+       }
     }
   }
 };

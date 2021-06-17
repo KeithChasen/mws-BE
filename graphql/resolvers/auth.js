@@ -1,12 +1,12 @@
+const generateToken = require("../../utils/jwt");
 const { UserInputError } = require('apollo-server');
 const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const fs = require('fs');
 const nodemailer = require('nodemailer');
 const sendgridTransport = require('nodemailer-sendgrid-transport');
-
+const fs = require('fs');
 const config = fs.existsSync(`${__dirname}/../../config.js`)? require(`${__dirname}/../../config.js`) : null;
+
 const User = require('../../mongo/User');
 const RestorePassword = require('../../mongo/RestorePassword');
 const { validateRegister, validateLogin, validateEmail, validatePasswords } = require('../../utils/validations/auth');
@@ -20,13 +20,6 @@ const emailTransporter = nodemailer.createTransport(sendgridTransport({
     api_key: sendgridKey
   }
 }));
-
-const jwtSecret = process.env.JWT || config.JWT;
-
-const generateToken = user => jwt.sign({
-    id: user.id,
-    email: user.email
-  }, jwtSecret, { expiresIn: '1h' });
 
 module.exports = {
   Query: {
