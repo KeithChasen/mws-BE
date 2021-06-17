@@ -10,6 +10,12 @@ module.exports = gql`
   type User {
       id: ID!
       email: String!
+      bio: String
+      age: String
+      occupation: String
+      nickname: String
+      firstname: String
+      lastname: String
       token: String
       createdAt: String
   }
@@ -45,5 +51,13 @@ module.exports = gql`
       login(loginInput: LoginInput): User
       forgot(forgotInput: ForgotInput): ForgotRestoreResponse
       restore(restoreInput: RestoreInput): ForgotRestoreResponse
+      updateUser(
+          bio: String
+          age: String
+          occupation: String
+          nickname: String
+          firstname: String
+          lastname: String
+      ): User
   }
 `;
