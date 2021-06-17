@@ -5,6 +5,5 @@ const config = fs.existsSync(`${__dirname}/../config.js`)? require(`${__dirname}
 const jwtSecret = process.env.JWT || config.JWT;
 
 module.exports = user => jwt.sign({
-  id: user.id,
-  email: user.email
+  ...user
 }, jwtSecret, { expiresIn: '1h' });
