@@ -8,7 +8,8 @@ const userSchema = new Schema({
   occupation: String,
   nickname: String,
   firstname: String,
-  lastname: String
+  lastname: String,
+  photo: String
 });
 
 module.exports = model('User', userSchema);

@@ -18,6 +18,7 @@ module.exports = gql`
       lastname: String
       token: String
       createdAt: String
+      photo: String
   }
 
   type ForgotRestoreResponse {
@@ -59,5 +60,6 @@ module.exports = gql`
           firstname: String
           lastname: String
       ): User
+      uploadAvatar(file: Upload): User!
   }
 `;
