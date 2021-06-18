@@ -4,15 +4,21 @@
   "main": "index.js",
   "scripts": {
     "start": "node index",
-    "serve": "nodemon index"
+    "serve": "nodemon index",
+    "preinstall": "npx npm-force-resolutions"
   },
   "dependencies": {
-    "apollo-server": "^2.24.0",
+    "apollo-server": "^2.25.1",
+    "aws-sdk": "^2.931.0",
     "bcryptjs": "^2.4.3",
     "graphql": "^15.5.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.12.9",
-    "nodemailer": "^6.6.1",
+    "mongoose": "^5.12.14",
+    "nodemailer": "^6.6.2",
     "nodemailer-sendgrid-transport": "^0.2.0"
+  },
+  "resolutions": {
+    "fs-capacitor": "^6.2.0",
+    "graphql-upload": "^11.0.0"
   }
 }
