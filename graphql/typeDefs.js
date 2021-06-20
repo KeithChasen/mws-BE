@@ -5,6 +5,7 @@ module.exports = gql`
 # Added temporarily because otherwise apollo is broken
   type Query {
       hi: String
+      getUsers: [User]
   }
   
   type User {

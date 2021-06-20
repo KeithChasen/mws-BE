@@ -1,6 +1,4 @@
 const { UserInputError } = require('apollo-server');
-// const fs = require('fs');
-
 const User = require('../../mongo/User');
 const generateToken = require("../../utils/jwt");
 const s3 = require('../../utils/s3');

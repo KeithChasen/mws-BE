@@ -1,13 +1,16 @@
 const authResolvers = require('./auth');
-const userResolvers = require('./user');
+const accountResolvers = require('./account');
+const usersResolvers = require('./users');
 
 module.exports = {
   Query:{
-    ...userResolvers.Query,
+    ...usersResolvers.Query,
+    ...accountResolvers.Query,
     ...authResolvers.Query,
   },
   Mutation: {
-    ...userResolvers.Mutation,
+    ...usersResolvers.Mutation,
+    ...accountResolvers.Mutation,
     ...authResolvers.Mutation,
   }
 };
