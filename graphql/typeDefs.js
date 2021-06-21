@@ -1,11 +1,9 @@
 const { gql } = require('apollo-server');
 
 module.exports = gql`  
-#  todo: delete this one once we have valid query. 
-# Added temporarily because otherwise apollo is broken
   type Query {
-      hi: String
       getUsers: [User]
+      getUser(userId: ID): User
   }
   
   type User {

@@ -22,11 +22,6 @@ const emailTransporter = nodemailer.createTransport(sendgridTransport({
 }));
 
 module.exports = {
-  Query: {
-    async hi() {
-      console.log('hi')
-    }
-  },
   Mutation: {
     async register(_, { registerInput: { email, password, confirmPassword }}) {
 
