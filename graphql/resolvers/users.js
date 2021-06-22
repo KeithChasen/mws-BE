@@ -23,11 +23,7 @@ module.exports = {
         });
       }
 
-      const userFetched = await User.findById(userId);
-
-      console.log(userFetched, 'fetced user')
-
-      return userFetched
+      return User.findById(userId);
     }
   },
   Mutation: {}

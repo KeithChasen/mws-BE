@@ -4,6 +4,7 @@ module.exports = gql`
   type Query {
       getUsers: [User]
       getUser(userId: ID): User
+      getMessages(from: ID): [Message]
   }
   
   type User {
@@ -18,6 +19,14 @@ module.exports = gql`
       token: String
       createdAt: String
       photo: String
+  }
+  
+  type Message {
+      id: ID!
+      to: String!
+      from: String!
+      content: String!
+      createdAt: String
   }
 
   type ForgotRestoreResponse {
@@ -60,5 +69,6 @@ module.exports = gql`
           lastname: String
       ): User
       uploadAvatar(file: Upload): User!
+      sendMessage(to: String, content: String): Message!
   }
 `;
