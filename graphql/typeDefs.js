@@ -69,6 +69,6 @@ module.exports = gql`
           lastname: String
       ): User
       uploadAvatar(file: Upload): User!
-      sendMessage(to: String, content: String): Message!
+      sendMessage(to: ID, content: String): Message!
   }
 `;

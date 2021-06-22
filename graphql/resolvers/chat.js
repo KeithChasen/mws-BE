@@ -43,9 +43,9 @@ module.exports = {
         });
       }
 
-      const recepient = await User.findOne({ email: to });
+      const recepient = await User.findById(to);
 
-      if (to === user.email) {
+      if (to === user.id) {
         throw new UserInputError('Error', {
           errors: {
             auth: 'You can not message yourself'
@@ -53,7 +53,7 @@ module.exports = {
         });
       }
 
-      if (recepient) {
+      if (!recepient) {
         throw new UserInputError('Error', {
           errors: {
             auth: 'User was not found'
@@ -70,14 +70,13 @@ module.exports = {
       }
 
       const message = new Message({
-        from: user.email,
+        from: user.id,
         to,
         content,
         createdAt: Date.now()
       });
 
       return message.save();
-
     }
   }
 };
