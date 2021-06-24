@@ -29,7 +29,7 @@ module.exports = {
           { $and: [{ from: user.id, to: companion.id }]},
           { $and: [{ from: companion.id, to: user.id }]},
         ]
-      }).sort({ createdAt: -1 });
+      }).sort({ createdAt: 1 });
     }
   },
   Mutation: {
