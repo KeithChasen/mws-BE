@@ -1,7 +1,6 @@
-const { UserInputError } = require("apollo-server");
+const { UserInputError, withFilter } = require("apollo-server");
 
 const User = require('../../mongo/User');
-
 const Message = require('../../mongo/Message');
 
 module.exports = {
@@ -34,7 +33,7 @@ module.exports = {
     }
   },
   Mutation: {
-    sendMessage: async (_, { to, content }, { user }) => {
+    sendMessage: async (_, { to, content }, { user, pubsub }) => {
       if (!user) {
         throw new UserInputError('Auth errors', {
           errors: {
@@ -76,7 +75,27 @@ module.exports = {
         createdAt: Date.now()
       });
 
-      return message.save();
+      const messageCreated = await message.save();
+
+      pubsub.publish('NEW_MESSAGE', { newMessage: message });
+
+      return messageCreated;
+    }
+  },
+  Subscription: {
+    newMessage: {
+      subscribe: withFilter((_, __, { pubsub, user }) => {
+        if (!user) {
+          throw new UserInputError('Auth errors', {
+            errors: {
+              auth: 'Unauthorized'
+            }
+          });
+        }
+        return pubsub.asyncIterator(['NEW_MESSAGE'])
+      }, (parent, _, { user }) => {
+        return parent.newMessage.from === user.id || parent.newMessage.to === user.id;
+      })
     }
   }
 };

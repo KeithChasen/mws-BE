@@ -55,6 +55,10 @@ module.exports = gql`
       hash: String!
   }
   
+  type Subscription {
+      newMessage: Message!
+  }
+  
   type Mutation {
       register(registerInput: RegisterInput): User
       login(loginInput: LoginInput): User
