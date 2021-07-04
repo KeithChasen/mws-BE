@@ -4,7 +4,7 @@ module.exports = gql`
   type Query {
       getUsers: [User]
       getUser(userId: ID): User
-      getMessages(from: ID): [Message]
+      getMessages(from: ID, step: Int): [Message]
   }
   
   type User {

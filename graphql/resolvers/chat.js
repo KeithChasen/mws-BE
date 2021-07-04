@@ -3,9 +3,11 @@ const { UserInputError, withFilter } = require("apollo-server");
 const User = require('../../mongo/User');
 const Message = require('../../mongo/Message');
 
+const CHAT_MESSAGES_BY_REQUEST = 5;
+
 module.exports = {
   Query: {
-    getMessages: async (_, { from }, { user }) => {
+    getMessages: async (_, { from, step }, { user }) => {
       if (!user) {
         throw new UserInputError('Auth errors', {
           errors: {
@@ -29,7 +31,10 @@ module.exports = {
           { $and: [{ from: user.id, to: companion.id }]},
           { $and: [{ from: companion.id, to: user.id }]},
         ]
-      }).sort({ createdAt: 1 });
+      })
+        .sort({ createdAt: -1 })
+        .skip(step * CHAT_MESSAGES_BY_REQUEST)
+        .limit(CHAT_MESSAGES_BY_REQUEST)
     }
   },
   Mutation: {
