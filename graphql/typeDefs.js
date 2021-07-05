@@ -4,6 +4,7 @@ module.exports = gql`
   type Query {
       getUsers: [User]
       getUser(userId: ID): User
+      getChatUsers: [User]     # todo: update this method once "friends" feature will be done
       getMessages(from: ID, step: Int): [Message]
   }
   
@@ -19,6 +20,7 @@ module.exports = gql`
       token: String
       createdAt: String
       photo: String
+      recentMessage: Message
   }
   
   type Message {
