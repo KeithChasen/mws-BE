@@ -61,6 +61,12 @@ module.exports = gql`
       newMessage: Message!
   }
   
+  type Friend {
+      requester: String
+      invitee: String
+      status:  String
+  }
+  
   type Mutation {
       register(registerInput: RegisterInput): User
       login(loginInput: LoginInput): User
@@ -76,5 +82,6 @@ module.exports = gql`
       ): User
       uploadAvatar(file: Upload): User!
       sendMessage(to: ID, content: String): Message!
+      addToFriendsRequest(selectedUserId: ID): Friend!
   }
 `;
