@@ -21,6 +21,7 @@ module.exports = gql`
       createdAt: String
       photo: String
       recentMessage: Message
+      friends: [Friend]
   }
   
   type Message {

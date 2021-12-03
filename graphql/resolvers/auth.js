@@ -8,6 +8,7 @@ const fs = require('fs');
 const config = fs.existsSync(`${__dirname}/../../config.js`)? require(`${__dirname}/../../config.js`) : null;
 
 const User = require('../../mongo/User');
+const Friend = require('../../mongo/Friend');
 const RestorePassword = require('../../mongo/RestorePassword');
 const { validateRegister, validateLogin, validateEmail, validatePasswords } = require('../../utils/validations/auth');
 
@@ -104,8 +105,16 @@ module.exports = {
 
       const token = generateToken(user);
 
+      const friends = await Friend.find({
+        $or: [
+          { invitee: user.id },
+          { requester: user.id }
+        ]
+      });
+
       return {
         ...user._doc,
+        friends,
         id: user._id,
         token
       }
