@@ -35,8 +35,8 @@ module.exports = {
       if (!areTheyFriends.length) {
         try {
           const newFriendRequest = new Friend({
-            invitee: user.id,
-            requester: selectedUserId
+            invitee: selectedUserId,
+            requester: user.id,
           });
 
           return await newFriendRequest.save();
