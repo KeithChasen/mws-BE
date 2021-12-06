@@ -6,6 +6,7 @@ module.exports = gql`
       getUser(userId: ID): User
       getChatUsers: [User]     # todo: update this method once "friends" feature will be done
       getMessages(from: ID, step: Int): [Message]
+      getFriends: [Friend]
   }
   
   type User {

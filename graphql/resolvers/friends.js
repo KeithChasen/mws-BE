@@ -2,6 +2,25 @@ const { UserInputError } = require("apollo-server");
 const Friend = require('../../mongo/Friend');
 
 module.exports = {
+  Query:{
+    getFriends: async (_, __, { user }) => {
+      if (!user) {
+        throw new UserInputError('Auth errors', {
+          errors: {
+            auth: 'Unauthorized'
+          }
+        });
+      }
+
+      return Friend.find({
+        $or: [
+          { invitee:   user.id },
+          { requester: user.id }
+        ]
+      });
+    }
+
+  },
   Mutation: {
     addToFriendsRequest: async (_, {  selectedUserId }, { user }) => {
       if (!user) {
