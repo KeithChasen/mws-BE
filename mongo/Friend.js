@@ -5,7 +5,7 @@ const friendSchema = new Schema({
   invitee: String,
   status: {
     type: String,
-    enum: ['pending', 'active', 'deleted'],
+    enum: ['pending', 'active'],
     default: 'pending'
   }
 });
