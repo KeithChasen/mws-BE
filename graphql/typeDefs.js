@@ -67,6 +67,7 @@ module.exports = gql`
       requester: String
       invitee: String
       status:  String
+      id: String
   }
   
   type Mutation {
