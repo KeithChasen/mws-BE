@@ -86,5 +86,6 @@ module.exports = gql`
       uploadAvatar(file: Upload): User!
       sendMessage(to: ID, content: String): Message!
       addToFriendsRequest(selectedUserId: ID): Friend!
+      changeFriendshipStatus(selectedUserId: ID, friendshipStatus: String): Friend!
   }
 `;

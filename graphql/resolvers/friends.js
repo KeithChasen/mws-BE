@@ -73,6 +73,48 @@ module.exports = {
           friend: 'You already sent a friend request to this user'
         }
       });
+    },
+    changeFriendshipStatus: async (_, {  selectedUserId, friendshipStatus }, { user }) => {
+      if (!user) {
+        throw new UserInputError('Auth errors', {
+          errors: {
+            auth: 'Unauthorized'
+          }
+        });
+      }
+
+      const friendRequest = await Friend.findOne({
+        $or: [
+          { $and: [
+              {
+                invitee: user.id,
+                requester: selectedUserId
+              }
+            ]
+          },
+          { $and: [
+              {
+                invitee: selectedUserId,
+                requester: user.id
+              }
+            ]
+          },
+        ]
+      });
+
+      if (friendRequest) {
+        if (!friendshipStatus) {
+          const deletedRequest = await friendRequest.deleteOne();
+        }
+
+        if (friendshipStatus === 'active') {
+          friendRequest.set({
+            status: friendshipStatus
+          });
+
+          return await friendRequest.save();
+        }
+      }
     }
   }
 };
