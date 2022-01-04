@@ -104,7 +104,7 @@ module.exports = {
 
       if (friendRequest) {
         if (!friendshipStatus) {
-          const deletedRequest = await friendRequest.deleteOne();
+          return friendRequest.deleteOne();
         }
 
         if (friendshipStatus === 'active') {
