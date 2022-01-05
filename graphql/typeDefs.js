@@ -7,6 +7,18 @@ module.exports = gql`
       getChatUsers: [User]     # todo: update this method once "friends" feature will be done
       getMessages(from: ID, step: Int): [Message]
       getFriends: [Friend]
+      getHealthDiary: [HealthDiary]
+  }
+  
+  type HealthDiary {
+      userid: ID!
+      date: String!
+      activities: Activities
+  }
+  
+  type Activities {
+      bloodPressure: [String],
+      pulse: [String]
   }
   
   type User {
@@ -58,6 +70,12 @@ module.exports = gql`
       confirmPassword: String!
       hash: String!
   }
+
+  input UpdateActivityInput {
+      date: String!
+      bloodPressure: String,
+      pulse: String
+  }
   
   type Subscription {
       newMessage: Message!
@@ -87,5 +105,6 @@ module.exports = gql`
       sendMessage(to: ID, content: String): Message!
       addToFriendsRequest(selectedUserId: ID): Friend!
       changeFriendshipStatus(selectedUserId: ID, friendshipStatus: String): Friend!
+      updateHealthDiary(activityInput: UpdateActivityInput): HealthDiary!
   }
 `;
