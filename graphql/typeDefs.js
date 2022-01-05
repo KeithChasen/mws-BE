@@ -16,9 +16,15 @@ module.exports = gql`
       activities: Activities
   }
   
+  type BloodPressure {
+      sys: String,
+      dia: String,
+      pulse: String,
+      time: String,
+  }
+  
   type Activities {
-      bloodPressure: [String],
-      pulse: [String]
+      bloodPressure: [BloodPressure]
   }
   
   type User {
@@ -70,12 +76,6 @@ module.exports = gql`
       confirmPassword: String!
       hash: String!
   }
-
-  input UpdateActivityInput {
-      date: String!
-      bloodPressure: String,
-      pulse: String
-  }
   
   type Subscription {
       newMessage: Message!
@@ -102,9 +102,15 @@ module.exports = gql`
           lastname: String
       ): User
       uploadAvatar(file: Upload): User!
-      sendMessage(to: ID, content: String): Message!
+      sendMessage(to: ID content: String): Message!
       addToFriendsRequest(selectedUserId: ID): Friend!
-      changeFriendshipStatus(selectedUserId: ID, friendshipStatus: String): Friend!
-      updateHealthDiary(activityInput: UpdateActivityInput): HealthDiary!
+      changeFriendshipStatus(selectedUserId: ID friendshipStatus: String): Friend!
+      saveBloodPressure(
+          date: String! 
+          time: String!
+          sys: String!
+          dia: String!
+          pulse: String!
+      ): HealthDiary!
   }
 `;

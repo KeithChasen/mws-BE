@@ -1,11 +1,18 @@
 const { model, Schema } = require('mongoose');
 
+const bloodPressure = new Schema({
+    sys: String,
+    dia: String,
+    pulse: String,
+    time: String,
+})
+
+
 const healthDiarySchema = new Schema({
     userid: String,
     date: String,
     activities: {
-        bloodPressure: [String],
-        pulse: [String]
+        bloodPressure: [bloodPressure]
     }
 });
 
