@@ -6,6 +6,7 @@ module.exports = gql`
       getUser(userId: ID): User
       getChatUsers: [User]     # todo: update this method once "friends" feature will be done
       getMessages(from: ID, step: Int): [Message]
+      getFriends: [Friend]
   }
   
   type User {
@@ -21,6 +22,7 @@ module.exports = gql`
       createdAt: String
       photo: String
       recentMessage: Message
+      friends: [Friend]
   }
   
   type Message {
@@ -61,6 +63,13 @@ module.exports = gql`
       newMessage: Message!
   }
   
+  type Friend {
+      requester: String
+      invitee: String
+      status:  String
+      id: String
+  }
+  
   type Mutation {
       register(registerInput: RegisterInput): User
       login(loginInput: LoginInput): User
@@ -76,5 +85,7 @@ module.exports = gql`
       ): User
       uploadAvatar(file: Upload): User!
       sendMessage(to: ID, content: String): Message!
+      addToFriendsRequest(selectedUserId: ID): Friend!
+      changeFriendshipStatus(selectedUserId: ID, friendshipStatus: String): Friend!
   }
 `;
