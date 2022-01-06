@@ -1,6 +1,7 @@
 const { UserInputError } = require("apollo-server");
 const HealthDiary = require('../../mongo/HealthDiary');
-const User = require("../../mongo/User");
+
+const MAX_ALLOWED_TIME_PERIOD_RECORDS = 4;
 
 module.exports = {
     Query:{
@@ -15,7 +16,6 @@ module.exports = {
 
             return HealthDiary.find({ userid: user.id });
         }
-
     },
     Mutation: {
         saveBloodPressure: async (_, { date, time, timePeriod, sys, dia, pulse  }, { user }) => {
@@ -30,7 +30,21 @@ module.exports = {
             const healthDiary = await HealthDiary.findOne({ userid: user.id, date });
 
             if (healthDiary) {
-                const bloodPressureRecord = {
+                const bloodPressureRecords = healthDiary.activities.bloodPressure;
+
+                const matchTimePeriodRecords = bloodPressureRecords.filter(bPR => bPR.timePeriod === timePeriod).length;
+
+                if (matchTimePeriodRecords >= MAX_ALLOWED_TIME_PERIOD_RECORDS) {
+                    throw new UserInputError('Limit Time Period records', {
+                        errors: {
+                            bloodPressure: `You can't add more than 
+                                ${MAX_ALLOWED_TIME_PERIOD_RECORDS} 
+                                records for ${timePeriod} time period`
+                        }
+                    });
+                }
+
+                const newBloodPressureRecord = {
                     sys,
                     dia,
                     pulse,
@@ -38,9 +52,10 @@ module.exports = {
                     timePeriod
                 };
 
+
                 healthDiary.activities.bloodPressure = [
                     ...healthDiary.activities.bloodPressure,
-                    bloodPressureRecord
+                    newBloodPressureRecord
                 ]
 
                 return healthDiary.save();
