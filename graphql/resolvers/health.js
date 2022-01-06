@@ -18,7 +18,7 @@ module.exports = {
 
     },
     Mutation: {
-        saveBloodPressure: async (_, { date, time, sys, dia, pulse  }, { user }) => {
+        saveBloodPressure: async (_, { date, time, timePeriod, sys, dia, pulse  }, { user }) => {
             if (!user) {
                 throw new UserInputError('Auth errors', {
                     errors: {
@@ -35,6 +35,7 @@ module.exports = {
                     dia,
                     pulse,
                     time,
+                    timePeriod
                 };
 
                 healthDiary.activities.bloodPressure = [
@@ -49,6 +50,7 @@ module.exports = {
                     dia,
                     pulse,
                     time,
+                    timePeriod
                 };
 
                 const healthDiary = new HealthDiary({

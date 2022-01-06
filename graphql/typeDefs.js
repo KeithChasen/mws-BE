@@ -21,6 +21,7 @@ module.exports = gql`
       dia: String,
       pulse: String,
       time: String,
+      timePeriod: String
   }
   
   type Activities {
@@ -111,6 +112,7 @@ module.exports = gql`
           sys: String!
           dia: String!
           pulse: String!
+          timePeriod: String!
       ): HealthDiary!
   }
 `;

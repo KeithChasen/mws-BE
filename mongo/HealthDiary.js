@@ -5,6 +5,7 @@ const bloodPressure = new Schema({
     dia: String,
     pulse: String,
     time: String,
+    timePeriod: String,
 })
 
 
