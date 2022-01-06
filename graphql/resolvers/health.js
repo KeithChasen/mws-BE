@@ -1,5 +1,6 @@
 const { UserInputError } = require("apollo-server");
 const HealthDiary = require('../../mongo/HealthDiary');
+const User = require("../../mongo/User");
 
 module.exports = {
     Query:{
@@ -29,9 +30,36 @@ module.exports = {
             const healthDiary = await HealthDiary.findOne({ userid: user.id, date });
 
             if (healthDiary) {
-                console.log('you have a health diary')
+                const bloodPressureRecord = {
+                    sys,
+                    dia,
+                    pulse,
+                    time,
+                };
+
+                healthDiary.activities.bloodPressure = [
+                    ...healthDiary.activities.bloodPressure,
+                    bloodPressureRecord
+                ]
+
+                return healthDiary.save();
             } else {
-                console.log('you dont have a diary')
+                const bloodPressureRecord = {
+                    sys,
+                    dia,
+                    pulse,
+                    time,
+                };
+
+                const healthDiary = new HealthDiary({
+                    userid: user.id,
+                    date: date,
+                    activities: {
+                        bloodPressure: [bloodPressureRecord]
+                    }
+                });
+
+                return await healthDiary.save();
             }
         }
     }
