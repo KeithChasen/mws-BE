@@ -37,9 +37,7 @@ module.exports = {
                 if (matchTimePeriodRecords >= MAX_ALLOWED_TIME_PERIOD_RECORDS) {
                     throw new UserInputError('Limit Time Period records', {
                         errors: {
-                            bloodPressure: `You can't add more than 
-                                ${MAX_ALLOWED_TIME_PERIOD_RECORDS} 
-                                records for ${timePeriod} time period`
+                            bloodPressure: `You can't add more than ${MAX_ALLOWED_TIME_PERIOD_RECORDS} records for ${timePeriod} time period`
                         }
                     });
                 }
