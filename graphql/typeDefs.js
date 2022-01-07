@@ -7,6 +7,25 @@ module.exports = gql`
       getChatUsers: [User]     # todo: update this method once "friends" feature will be done
       getMessages(from: ID, step: Int): [Message]
       getFriends: [Friend]
+      getHealthDiary: [HealthDiary]
+  }
+  
+  type HealthDiary {
+      userid: ID!
+      date: String!
+      activities: Activities
+  }
+  
+  type BloodPressure {
+      sys: String,
+      dia: String,
+      pulse: String,
+      time: String,
+      timePeriod: String
+  }
+  
+  type Activities {
+      bloodPressure: [BloodPressure]
   }
   
   type User {
@@ -84,8 +103,16 @@ module.exports = gql`
           lastname: String
       ): User
       uploadAvatar(file: Upload): User!
-      sendMessage(to: ID, content: String): Message!
+      sendMessage(to: ID content: String): Message!
       addToFriendsRequest(selectedUserId: ID): Friend!
-      changeFriendshipStatus(selectedUserId: ID, friendshipStatus: String): Friend!
+      changeFriendshipStatus(selectedUserId: ID friendshipStatus: String): Friend!
+      saveBloodPressure(
+          date: String! 
+          time: String!
+          sys: String!
+          dia: String!
+          pulse: String!
+          timePeriod: String!
+      ): HealthDiary!
   }
 `;
