@@ -8,6 +8,19 @@ module.exports = gql`
       getMessages(from: ID, step: Int): [Message]
       getFriends: [Friend]
       getHealthDiary: [HealthDiary]
+      getActivities: [ActivityDay]
+  }
+  
+  type SportActivity {
+    type: String
+    trainingType: String,
+    trainingString: String
+  }
+  
+  type ActivityDay {
+      userid: ID!
+      date: String!
+      activities: [SportActivity]
   }
   
   type HealthDiary {
@@ -114,5 +127,11 @@ module.exports = gql`
           pulse: String!
           timePeriod: String!
       ): HealthDiary!
+      saveActivity(
+          date: String! 
+          type: String!
+          trainingType: String
+          result: String
+      ): SportActivity
   }
 `;
